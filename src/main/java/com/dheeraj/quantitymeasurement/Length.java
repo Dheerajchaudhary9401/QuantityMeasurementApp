@@ -3,9 +3,9 @@ package com.dheeraj.quantitymeasurement;
 public class Length {
 	private double value;
 	private LengthUnit unit;
-	
+	private static final double EPSILON =0.0001;
 	public enum LengthUnit{
-		FEET(12.0), INCHES(1.0);
+		FEET(12.0), INCHES(1.0),YARDS(36.0),CENTIMETERS(0.393701);
 		private final double conversionFactor;
 		LengthUnit(double conversionFactor){
 			this.conversionFactor=conversionFactor;
@@ -39,7 +39,7 @@ public class Length {
 			return false;
 		}
 		Length other = (Length) o;
-		return Double.compare(this.convertToBaseUnit(),other.convertToBaseUnit())==0;
+		return Math.abs(this.convertToBaseUnit() - other.convertToBaseUnit()) < EPSILON;
 	}
 	
 	@Override
