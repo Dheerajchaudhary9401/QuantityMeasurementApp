@@ -26,6 +26,13 @@ public class Length {
 		return value* unit.getConversionFactor();
 	}
 	
+	public double getValue() {
+		return value;
+	}
+	
+	public LengthUnit getUnit() {
+		return unit;
+	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -47,10 +54,23 @@ public class Length {
 		return Double.hashCode(convertToBaseUnit());
 	}
 	
+	@Override
+	public String toString() {
+		return value+" "+unit;
+	}
+	
 	public double convertTo(LengthUnit targetUnit) {
 		if(targetUnit==null) throw new IllegalArgumentException("unit cannot be null");
 		double baseValue=convertToBaseUnit();
 		return baseValue/targetUnit.getConversionFactor();
+	}
+	
+	public Length add(Length other) {
+		if(other == null) {
+			throw new IllegalArgumentException("Length cannot be null");
+		}
+		double result = (this.convertToBaseUnit()+other.convertToBaseUnit())/this.unit.getConversionFactor();
+		return new Length(result,this.unit);
 	}
 
 }
