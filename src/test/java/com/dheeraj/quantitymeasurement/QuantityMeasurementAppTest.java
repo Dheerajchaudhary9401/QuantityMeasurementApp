@@ -235,4 +235,24 @@ class QuantityMeasurementAppTest {
          Length res = q1.add(new Length(12.0, Length.LengthUnit.INCHES));
          assertEquals(ans, res);
     }
+    
+    @Test
+    void testAddition_ExplicitTarget_Feet(){
+    	Length l1=new Length(1.0, Length.LengthUnit.FEET);
+    	Length l2=new Length(12.0, Length.LengthUnit.INCHES);
+        Length res = l1.add(l2,Length.LengthUnit.FEET);
+        Length ans = new Length(2.0, Length.LengthUnit.FEET);
+
+        assertEquals(ans, res);
+    }
+
+    @Test
+    public void testTargetLengthAddition() {
+        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
+        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+        Length result = l1.add(l2, Length.LengthUnit.INCHES);
+        Length expected = new Length(24.0, Length.LengthUnit.INCHES);
+        assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(result, expected));
+    }
+    
 }
