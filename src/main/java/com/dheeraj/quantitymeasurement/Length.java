@@ -4,26 +4,16 @@ public class Length {
 	private double value;
 	private LengthUnit unit;
 	private static final double EPSILON =0.0001;
-	public enum LengthUnit{
-		FEET(12.0), INCHES(1.0),YARDS(36.0),CENTIMETERS(0.393701);
-		private final double conversionFactor;
-		LengthUnit(double conversionFactor){
-			this.conversionFactor=conversionFactor;
-		}
-		public double getConversionFactor() {
-			return conversionFactor;
-		}
-	}
 	
 	public Length(double value,LengthUnit unit) {
-		if(value<0) throw new IllegalArgumentException("Length can not be less then zero or negative");
+		if(!Double.isFinite(value)) throw new IllegalArgumentException("Length should be finite");
 		if(unit==null) throw new IllegalArgumentException("Unit can not be null");
 		this.value=value;
 		this.unit=unit;
 	}
 	
 	private double convertToBaseUnit() {
-		return value* unit.getConversionFactor();
+		return unit.toBase(value);
 	}
 	
 	public double getValue() {
@@ -51,7 +41,7 @@ public class Length {
 	
 	@Override
 	public int hashCode() {
-		return Double.hashCode(convertToBaseUnit());
+		return Long.hashCode(Math.round(convertToBaseUnit() / EPSILON));
 	}
 	
 	@Override
@@ -62,26 +52,23 @@ public class Length {
 	public double convertTo(LengthUnit targetUnit) {
 		if(targetUnit==null) throw new IllegalArgumentException("unit cannot be null");
 		double baseValue=convertToBaseUnit();
-		return baseValue/targetUnit.getConversionFactor();
+		return targetUnit.fromBase(baseValue);
 	}
 	
 	public Length add(Length other) {
-		if(other == null) {
-			throw new IllegalArgumentException("Length cannot be null");
-		}
-		double result = (this.convertToBaseUnit()+other.convertToBaseUnit())/this.unit.getConversionFactor();
-		return new Length(result,this.unit);
+		return add(other,this.unit);
 	}
 	
-	public Length add(Length other, LengthUnit unit) {
+	public Length add(Length other, LengthUnit targetUnit) {
 		if(other==null) {
 			throw new IllegalArgumentException("Length cant be null");
 		}
-		if(unit==null) {
+		if(targetUnit==null) {
 			throw new IllegalArgumentException("Unit can't be null");
 		}
-		double result=(this.convertToBaseUnit()+other.convertToBaseUnit())/unit.getConversionFactor();
-		return new Length(result,unit);
+		double result=this.convertToBaseUnit()+other.convertToBaseUnit();
+		result = targetUnit.fromBase(result);
+		return new Length(result,targetUnit);
 	}
 
 }
