@@ -140,11 +140,13 @@ public class QuantityMeasurementApp {
 		Quantity<WeightUnit> convertedWeight=demonstrateConversion(weightInGrams, WeightUnit.KILOGRAM);
 		System.out.println("Converted weight"+convertedWeight);
 		
+		
 		//Demonstration addition of two quantities and return the result in the unit of first quantity
 		System.out.println("Addition (result in first unit): "+demonstrateAddition(weightInGrams, weightInKilograms));
 		
 		//Demonstration addition of two quantities and return the result in the target unit
 		System.out.println("Addition (result in MILLIGRAM): "+demonstrateAddition(weightInGrams,weightInKilograms,WeightUnit.MILLIGRAM));
+		
 		
 		//length
 		Quantity<LengthUnit> lengthInFeet = new Quantity<>(1.0, LengthUnit.FEET);
@@ -160,5 +162,17 @@ public class QuantityMeasurementApp {
         //Demonstration addition of two quantities and return the result in the target unit
 		System.out.println("Addition (result in YARDS): " + demonstrateAddition(lengthInFeet, lengthInInches, LengthUnit.YARDS));
     
+		//volume
+		Quantity<VolumeUnit> volumeInML=new Quantity<>(1000.0,VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> volumeInL=new Quantity<>(1.0,VolumeUnit.LITRE);
+		boolean areVolumeEqual=demonstrateEquality(volumeInML, volumeInL);
+		System.out.println("Are volumes equal: "+areVolumeEqual);
+		
+		Quantity<VolumeUnit> convertedVolume=demonstrateConversion(volumeInML,VolumeUnit.LITRE);
+		System.out.println("Converted volume: "+convertedVolume);
+		System.out.println("Addition (result in first unit): "+demonstrateAddition(volumeInML, volumeInL));
+		System.out.println("Addition (result in gallons): " + demonstrateAddition(volumeInML,volumeInL,VolumeUnit.GALLON));
+		
+		
 	}
 }
