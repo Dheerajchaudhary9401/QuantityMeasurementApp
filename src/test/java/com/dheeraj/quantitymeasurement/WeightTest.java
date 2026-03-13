@@ -94,8 +94,7 @@ class WeightTest {
         "2.0, TONNE,    1000.0,    KILOGRAM",
         "2.0, GRAM,     1000.0,    MILLIGRAM"
     })
-    void testCrossUnitEquality_DifferentWeight(double v1, WeightUnit u1,
-                                               double v2, WeightUnit u2) {
+    void testCrossUnitEquality_DifferentWeight(double v1, WeightUnit u1,double v2, WeightUnit u2) {
         Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
         Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
 
@@ -122,8 +121,7 @@ class WeightTest {
         "-1.0,       KILOGRAM,  POUND,     -2.20462",
         "-1.0,       TONNE,     KILOGRAM,  -1000.0"
     })
-    void testConversion(double value, WeightUnit source,
-                        WeightUnit target, double expected) {
+    void testConversion(double value, WeightUnit source, WeightUnit target, double expected) {
         Quantity<WeightUnit> w = new Quantity<>(value, source);
         assertEquals(expected, w.convertTo(target), EPSILON);
     }
@@ -139,20 +137,17 @@ class WeightTest {
 
     @Test
     void testConversion_NaN_throws() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Quantity<>(Double.NaN, WeightUnit.KILOGRAM));
+        assertThrows(IllegalArgumentException.class,() -> new Quantity<>(Double.NaN, WeightUnit.KILOGRAM));
     }
 
     @Test
     void testConversion_Infinite_throws() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Quantity<>(Double.POSITIVE_INFINITY, WeightUnit.KILOGRAM));
+        assertThrows(IllegalArgumentException.class,() -> new Quantity<>(Double.POSITIVE_INFINITY, WeightUnit.KILOGRAM));
     }
 
     @Test
     void testConversion_NullUnit_throws() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Quantity<>(1.0, null));
+        assertThrows(IllegalArgumentException.class,() -> new Quantity<>(1.0, null));
     }
 
     // add test
@@ -172,9 +167,7 @@ class WeightTest {
         "-1.0,   KILOGRAM,  -1.0,    KILOGRAM,  -2.0",
         "1000.0, GRAM,      -500.0,  GRAM,      500.0"
     })
-    void testAdd(double v1, WeightUnit u1,
-                 double v2, WeightUnit u2,
-                 double expectedValue) {
+    void testAdd(double v1, WeightUnit u1,double v2, WeightUnit u2,double expectedValue) {
         Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
         Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
 
@@ -226,9 +219,7 @@ class WeightTest {
         // small scale
         "0.001, KILOGRAM, 0.002, KILOGRAM, GRAM, 3.0"
     })
-    void testTargetAdd(double v1, WeightUnit u1,
-                       double v2, WeightUnit u2,
-                       WeightUnit target, double expectedValue) {
+    void testTargetAdd(double v1, WeightUnit u1,double v2, WeightUnit u2,WeightUnit target, double expectedValue) {
         Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
         Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
 
@@ -242,15 +233,133 @@ class WeightTest {
     void testAdd_NullWeight() {
         Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-        assertThrows(IllegalArgumentException.class,
-                () -> w1.add(null));
+        assertThrows(IllegalArgumentException.class,() -> w1.add(null));
     }
 
     @Test
     void testTargetAdd_NullWeight() {
         Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-        assertThrows(IllegalArgumentException.class,
-                () -> w1.add(null, null));
+        assertThrows(IllegalArgumentException.class,() -> w1.add(null, null));
+    }
+    
+  //Subtract 	Tests
+    @ParameterizedTest
+    @CsvSource({
+        "3.0,    KILOGRAM,  1.0,    KILOGRAM,  2.0",
+        "1000.0, GRAM,      500.0,  GRAM,      500.0",
+        "1000.0, MILLIGRAM, 500.0,  MILLIGRAM, 500.0",
+        "5.0,    KILOGRAM,  -2.0,   KILOGRAM,  7.0",
+        "-1.0,   KILOGRAM,  -3.0,   KILOGRAM,  2.0",
+        "0.003,  KILOGRAM,  0.001,  KILOGRAM,  0.002"
+    })
+    void testSubtract(double v1, WeightUnit u1,
+                      double v2, WeightUnit u2,
+                      double expectedValue) {
+        Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
+        Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
+
+        Quantity<WeightUnit> result = w1.subtract(w2);
+
+        assertEquals(expectedValue, result.getValue(), EPSILON);
+        assertEquals(u1, result.getUnit());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        //Same unit operations
+        "3.0,    KILOGRAM,  1.0,    KILOGRAM,  KILOGRAM,  2.0",
+        "1000.0, GRAM,      500.0,  GRAM,      GRAM,      500.0",
+        "1.0,    TONNE,     500.0,  KILOGRAM,  TONNE,     0.5",
+        "500.0,  MILLIGRAM, 250.0,  MILLIGRAM, MILLIGRAM, 250.0",
+
+        // KILOGRAM - GRAM
+        "2.0, KILOGRAM, 1000.0, GRAM, GRAM,     1000.0",
+        "2.0, KILOGRAM, 1000.0, GRAM, TONNE,    0.001",
+
+        // POUND - OUNCE
+        "2.0, POUND, 16.0, OUNCE, POUND,    1.0",
+        "2.0, POUND, 16.0, OUNCE, KILOGRAM, 0.453592",
+
+        // TONNE - KILOGRAM
+        "2.0, TONNE, 1000.0, KILOGRAM, TONNE,    1.0",
+        "2.0, TONNE, 1000.0, KILOGRAM, KILOGRAM, 1000.0",
+        "2.0, TONNE, 1000.0, KILOGRAM, GRAM,     1000000.0",
+
+        // GRAM - MILLIGRAM
+        "2.0, GRAM, 1000.0, MILLIGRAM, GRAM,      1.0",
+        "2.0, GRAM, 1000.0, MILLIGRAM, MILLIGRAM, 1000.0",
+
+        //Zero value
+        "5.0, KILOGRAM, 0.0, GRAM, KILOGRAM, 5.0",
+
+        //Negative values
+        "5.0,  KILOGRAM, -2.0, KILOGRAM, KILOGRAM, 7.0",
+        "-1.0, KILOGRAM, -3.0, KILOGRAM, GRAM,     2000.0",
+
+        //Large scale
+        "2000.0, KILOGRAM, 500.0, KILOGRAM, GRAM, 1500000.0",
+
+        //Small scale
+        "0.003, KILOGRAM, 0.001, KILOGRAM, GRAM, 2.0"
+    })
+    void testTargetSubtract(double v1, WeightUnit u1,
+                            double v2, WeightUnit u2,
+                            WeightUnit target, double expectedValue) {
+        Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
+        Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
+
+        Quantity<WeightUnit> result = w1.subtract(w2, target);
+
+        assertEquals(expectedValue, result.getValue(), EPSILON);
+        assertEquals(target, result.getUnit());
+    }
+
+    @Test
+    void testSubtract_NullWeight() {
+        Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+
+        assertThrows(IllegalArgumentException.class, () -> w1.subtract(null));
+    }
+
+    @Test
+    void testTargetSubtract_NullWeight() {
+        Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+
+        assertThrows(IllegalArgumentException.class, () -> w1.subtract(null, null));
+    }
+
+    //Divide Tests
+    @ParameterizedTest
+    @CsvSource({
+        "10.0,   KILOGRAM,  2.0,    KILOGRAM,  5.0",
+        "1000.0, GRAM,      500.0,  GRAM,      2.0",
+        "1.0,    KILOGRAM,  1000.0, GRAM,      1.0",
+        "-4.0,   KILOGRAM,  2.0,    KILOGRAM,  -2.0",
+        "-4.0,   KILOGRAM,  -2.0,   KILOGRAM,  2.0",
+        "0.0,    KILOGRAM,  1.0,    KILOGRAM,  0.0"
+    })
+    void testDivide(double v1, WeightUnit u1,
+                    double v2, WeightUnit u2,
+                    double expectedResult) {
+        Quantity<WeightUnit> w1 = new Quantity<>(v1, u1);
+        Quantity<WeightUnit> w2 = new Quantity<>(v2, u2);
+
+        assertEquals(expectedResult, w1.divide(w2), EPSILON);
+    }
+
+    @Test
+    void testDivide_NullWeight() {
+        Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+
+        assertThrows(IllegalArgumentException.class, () -> w1.divide(null));
+    }
+
+    @Test
+    void testDivide_ZeroDivisor() {
+        Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> w2 = new Quantity<>(0.0, WeightUnit.KILOGRAM);
+
+        assertThrows(IllegalArgumentException.class, () -> w1.divide(w2));
     }
 }
