@@ -6,6 +6,7 @@ public enum WeightUnit implements IMeasurable {
 	WeightUnit(double conversionFactor){
 		this.conversionFactor=conversionFactor;
 	}
+	@Override
 	public double getConversionFactor() {
 		return conversionFactor;
 	}
