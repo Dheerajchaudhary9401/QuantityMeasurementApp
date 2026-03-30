@@ -1,4 +1,4 @@
-package com.dheeraj.quantitymeasurement;
+package com.dheeraj.quantitymeasurement.domain;
 
 import java.util.function.Function;
 

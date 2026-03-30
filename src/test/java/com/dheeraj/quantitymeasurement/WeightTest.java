@@ -5,6 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import com.dheeraj.quantitymeasurement.domain.Quantity;
+import com.dheeraj.quantitymeasurement.domain.WeightUnit;
+
 import org.junit.jupiter.api.Test;
 
 class WeightTest {
@@ -360,6 +363,6 @@ class WeightTest {
         Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
         Quantity<WeightUnit> w2 = new Quantity<>(0.0, WeightUnit.KILOGRAM);
 
-        assertThrows(IllegalArgumentException.class, () -> w1.divide(w2));
+        assertThrows(ArithmeticException.class, () -> w1.divide(w2));
     }
 }

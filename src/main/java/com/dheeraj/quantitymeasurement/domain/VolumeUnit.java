@@ -1,4 +1,4 @@
-package com.dheeraj.quantitymeasurement;
+package com.dheeraj.quantitymeasurement.domain;
 
 public enum VolumeUnit implements IMeasurable {
 	MILLILITRE(0.001),

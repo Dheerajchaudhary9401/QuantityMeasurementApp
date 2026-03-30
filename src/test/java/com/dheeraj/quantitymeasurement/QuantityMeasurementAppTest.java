@@ -5,6 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import com.dheeraj.quantitymeasurement.domain.LengthUnit;
+import com.dheeraj.quantitymeasurement.domain.Quantity;
+
 import org.junit.jupiter.api.Test;
 
 class QuantityMeasurementAppTest {
@@ -328,7 +331,7 @@ class QuantityMeasurementAppTest {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
         Quantity<LengthUnit> l2 = new Quantity<>(0.0, LengthUnit.FEET);
 
-        assertThrows(IllegalArgumentException.class, () -> l1.divide(l2));
+        assertThrows(ArithmeticException.class, () -> l1.divide(l2));
     }
     
 }

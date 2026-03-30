@@ -1,4 +1,4 @@
-package com.dheeraj.quantitymeasurement;
+package com.dheeraj.quantitymeasurement.domain;
 
 public enum LengthUnit implements IMeasurable{
 	FEET(12.0),INCHES(1.0),YARDS(36),CENTIMETERS(1.0/2.54);

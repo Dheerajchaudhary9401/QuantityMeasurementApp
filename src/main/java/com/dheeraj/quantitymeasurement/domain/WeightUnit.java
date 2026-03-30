@@ -1,4 +1,4 @@
-package com.dheeraj.quantitymeasurement;
+package com.dheeraj.quantitymeasurement.domain;
 
 public enum WeightUnit implements IMeasurable {
 	MILLIGRAM(0.000001),GRAM(0.001),KILOGRAM(1.0),POUND(0.453592),OUNCE(0.0283495),TONNE(1000.0);

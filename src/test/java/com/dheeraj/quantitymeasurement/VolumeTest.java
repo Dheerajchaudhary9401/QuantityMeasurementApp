@@ -5,6 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import com.dheeraj.quantitymeasurement.domain.LengthUnit;
+import com.dheeraj.quantitymeasurement.domain.Quantity;
+import com.dheeraj.quantitymeasurement.domain.VolumeUnit;
+import com.dheeraj.quantitymeasurement.domain.WeightUnit;
+
 import org.junit.jupiter.api.Test;
 
 class VolumeTest {
@@ -356,7 +361,7 @@ class VolumeTest {
         Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
         Quantity<VolumeUnit> v2 = new Quantity<>(0.0, VolumeUnit.LITRE);
 
-        assertThrows(IllegalArgumentException.class, () -> v1.divide(v2));
+        assertThrows(ArithmeticException.class, () -> v1.divide(v2));
     }
     
 }

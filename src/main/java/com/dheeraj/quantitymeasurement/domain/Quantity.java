@@ -1,4 +1,4 @@
-package com.dheeraj.quantitymeasurement;
+package com.dheeraj.quantitymeasurement.domain;
 
 public class Quantity<U extends IMeasurable> {
 	
