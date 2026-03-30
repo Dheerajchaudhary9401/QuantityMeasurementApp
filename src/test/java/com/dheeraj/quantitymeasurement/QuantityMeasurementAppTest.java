@@ -14,13 +14,14 @@ class QuantityMeasurementAppTest {
 
     private static final double EPSILON = 1e-6;
 
-    // length tests
+    // length equality tests
 
     @ParameterizedTest
     @EnumSource(LengthUnit.class)
     void testEquality_SameValue_ForAllUnits(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(10.0, unit);
         Quantity<LengthUnit> l2 = new Quantity<>(10.0, unit);
+
         assertTrue(l1.equals(l2));
     }
 
@@ -29,6 +30,7 @@ class QuantityMeasurementAppTest {
     void testEquality_DifferentValue_ForAllUnits(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(10.0, unit);
         Quantity<LengthUnit> l2 = new Quantity<>(20.0, unit);
+
         assertFalse(l1.equals(l2));
     }
 
@@ -36,6 +38,7 @@ class QuantityMeasurementAppTest {
     @EnumSource(LengthUnit.class)
     void testFeetEquality_NullComparison(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(68.0, unit);
+
         assertFalse(l1.equals(null));
     }
 
@@ -43,6 +46,7 @@ class QuantityMeasurementAppTest {
     @EnumSource(LengthUnit.class)
     void testFeetEquality_NonNumericInput(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(68.0, unit);
+
         assertFalse(l1.equals("68"));
     }
 
@@ -50,6 +54,7 @@ class QuantityMeasurementAppTest {
     @EnumSource(LengthUnit.class)
     void testFeetEquality_SameReference(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(68.0, unit);
+
         assertTrue(l1.equals(l1));
     }
 
@@ -58,6 +63,7 @@ class QuantityMeasurementAppTest {
     void testFeetEquality_Consistent(LengthUnit unit) {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, unit);
         Quantity<LengthUnit> l2 = new Quantity<>(1.0, unit);
+
         assertTrue(l1.equals(l2));
         assertTrue(l1.equals(l2));
         assertTrue(l1.equals(l2));
@@ -73,9 +79,11 @@ class QuantityMeasurementAppTest {
         "3.0,   FEET,        1.0,     YARDS",
         "30.48, CENTIMETERS, 1.0,     FEET"
     })
-    void testCrossUnitEquality_SameLength(double v1, LengthUnit u1,double v2, LengthUnit u2) {
+    void testCrossUnitEquality_SameLength(double v1, LengthUnit u1,
+                                          double v2, LengthUnit u2) {
         Quantity<LengthUnit> l1 = new Quantity<>(v1, u1);
         Quantity<LengthUnit> l2 = new Quantity<>(v2, u2);
+
         assertTrue(l1.equals(l2));
     }
 
@@ -87,9 +95,11 @@ class QuantityMeasurementAppTest {
         "3.0,    FEET,        3.0,     YARDS",
         "30.48,  CENTIMETERS, 2.0,     FEET"
     })
-    void testCrossUnitEquality_DifferentLength(double v1, LengthUnit u1,double v2, LengthUnit u2) {
+    void testCrossUnitEquality_DifferentLength(double v1, LengthUnit u1,
+                                               double v2, LengthUnit u2) {
         Quantity<LengthUnit> l1 = new Quantity<>(v1, u1);
         Quantity<LengthUnit> l2 = new Quantity<>(v2, u2);
+
         assertFalse(l1.equals(l2));
     }
 
@@ -107,7 +117,8 @@ class QuantityMeasurementAppTest {
         "0.0,  FEET,        INCHES,      0.0",
         "-1.0, FEET,        INCHES,      -12.0"
     })
-    void testConversion(double value, LengthUnit source,LengthUnit target, double expected) {
+    void testConversion(double value, LengthUnit source,
+                        LengthUnit target, double expected) {
         Quantity<LengthUnit> l = new Quantity<>(value, source);
         assertEquals(expected, l.convertTo(target), EPSILON);
     }
@@ -117,23 +128,26 @@ class QuantityMeasurementAppTest {
     void testRoundTrip_AllUnitsToMetreAndBack(LengthUnit unit) {
         double original  = 1.0;
         double converted = new Quantity<>(original, unit).convertTo(LengthUnit.CENTIMETERS);
-        double back = new Quantity<>(converted, LengthUnit.CENTIMETERS).convertTo(unit);
+        double back      = new Quantity<>(converted, LengthUnit.CENTIMETERS).convertTo(unit);
         assertEquals(original, back, EPSILON);
     }
 
     @Test
     void testConversion_NaN_throws() {
-        assertThrows(IllegalArgumentException.class, () -> new Quantity<>(Double.NaN, LengthUnit.FEET));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Quantity<>(Double.NaN, LengthUnit.FEET));
     }
 
     @Test
     void testConversion_Infinite_throws() {
-        assertThrows(IllegalArgumentException.class,() -> new Quantity<>(Double.POSITIVE_INFINITY, LengthUnit.FEET));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Quantity<>(Double.POSITIVE_INFINITY, LengthUnit.FEET));
     }
 
     @Test
     void testConversion_NullUnit_throws() {
-        assertThrows(IllegalArgumentException.class,() -> new Quantity<>(1.0, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Quantity<>(1.0, null));
     }
 
     // add test
@@ -151,10 +165,14 @@ class QuantityMeasurementAppTest {
         "1000000.0, FEET,        1000000.0, FEET,   2000000.0",
         "0.001,     FEET,        0.002, FEET,       0.003"
     })
-    void testAdd(double v1, LengthUnit u1,double v2, LengthUnit u2,double expectedValue) {
+    void testAdd(double v1, LengthUnit u1,
+                 double v2, LengthUnit u2,
+                 double expectedValue) {
         Quantity<LengthUnit> l1 = new Quantity<>(v1, u1);
         Quantity<LengthUnit> l2 = new Quantity<>(v2, u2);
+
         Quantity<LengthUnit> result = l1.add(l2);
+
         assertEquals(expectedValue, result.getValue(), EPSILON);
         assertEquals(u1, result.getUnit());
     }
@@ -197,10 +215,14 @@ class QuantityMeasurementAppTest {
         // small scale
         "12.0, INCHES, 12.0, INCHES, YARDS, 0.666667"
     })
-    void testTargetAdd(double v1, LengthUnit u1,double v2, LengthUnit u2,LengthUnit target, double expectedValue) {
+    void testTargetAdd(double v1, LengthUnit u1,
+                       double v2, LengthUnit u2,
+                       LengthUnit target, double expectedValue) {
         Quantity<LengthUnit> l1 = new Quantity<>(v1, u1);
         Quantity<LengthUnit> l2 = new Quantity<>(v2, u2);
+
         Quantity<LengthUnit> result = l1.add(l2, target);
+
         assertEquals(expectedValue, result.getValue(), EPSILON);
         assertEquals(target, result.getUnit());
     }
@@ -208,21 +230,29 @@ class QuantityMeasurementAppTest {
     @Test
     void testAdd_NullLength() {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
-        assertThrows(IllegalArgumentException.class,() -> l1.add(null));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> l1.add(null));
     }
 
     @Test
     void testTargetAdd_NullLength() {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
-        assertThrows(IllegalArgumentException.class,() -> l1.add(null, null));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> l1.add(null, null));
     }
     
-    // Subtract Tests
+ // subtract tests
 
     @ParameterizedTest
     @CsvSource({
         "3.0,  FEET,        1.0,  FEET,        2.0",
         "24.0, INCHES,      12.0, INCHES,      12.0",
+        "2.0,  YARDS,       3.0,  FEET,        1.0",
+        "3.0,  FEET,        12.0, INCHES,      2.0",
+        "5.0,  CENTIMETERS, 2.54, CENTIMETERS, 2.46",
+        "5.0,  FEET,        0.0,  INCHES,      5.0",
         "5.0,  FEET,        -2.0, FEET,        7.0",
         "-1.0, FEET,        -3.0, FEET,        2.0",
         "0.003,FEET,        0.001,FEET,        0.002"
@@ -289,23 +319,27 @@ class QuantityMeasurementAppTest {
     void testSubtract_NullLength() {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
 
-        assertThrows(IllegalArgumentException.class, () -> l1.subtract(null));
+        assertThrows(IllegalArgumentException.class,
+                () -> l1.subtract(null));
     }
 
     @Test
     void testTargetSubtract_NullLength() {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
 
-        assertThrows(IllegalArgumentException.class, () -> l1.subtract(null, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> l1.subtract(null, null));
     }
 
-    // Divide Tests
+    // divide tests
 
     @ParameterizedTest
     @CsvSource({
         "10.0, FEET,        2.0,  FEET,        5.0",
         "24.0, INCHES,      12.0, INCHES,      2.0",
         "1.0,  YARDS,       3.0,  FEET,        1.0",
+        "2.0,  FEET,        12.0, INCHES,      2.0",
+        "1.0,  FEET,        1.0,  FEET,        1.0",
         "-4.0, FEET,        2.0,  FEET,        -2.0",
         "-4.0, FEET,        -2.0, FEET,        2.0",
         "0.0,  FEET,        1.0,  FEET,        0.0"
@@ -323,7 +357,8 @@ class QuantityMeasurementAppTest {
     void testDivide_NullLength() {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
 
-        assertThrows(IllegalArgumentException.class, () -> l1.divide(null));
+        assertThrows(IllegalArgumentException.class,
+                () -> l1.divide(null));
     }
 
     @Test
@@ -331,7 +366,7 @@ class QuantityMeasurementAppTest {
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
         Quantity<LengthUnit> l2 = new Quantity<>(0.0, LengthUnit.FEET);
 
-        assertThrows(ArithmeticException.class, () -> l1.divide(l2));
+        assertThrows(ArithmeticException.class,
+                () -> l1.divide(l2));
     }
-    
 }
