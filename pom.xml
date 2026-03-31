@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.vikash</groupId>
+    <groupId>com.dheeraj</groupId>
     <artifactId>quantity-measurement-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -116,7 +116,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.vikash.quantitymeasurement.QuantityMeasurementApp</mainClass>
+                    <mainClass>com.dheeraj.quantitymeasurement.QuantityMeasurementApp</mainClass>
                 </configuration>
             </plugin>
 
@@ -131,7 +131,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.vikash.quantitymeasurement.QuantityMeasurementApp</mainClass>
+                                    <mainClass>com.dheeraj.quantitymeasurement.QuantityMeasurementApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
