@@ -25,13 +25,13 @@ This project follows a **progressive development approach**, where each use case
 
 | UC | Branch | Description |
 |----|--------|-------------|
-| UC1 | [`feature/UC1-FeetEquality`](./tree/feature/UC1-FeetEquality) | Validate equality between two feet values |
-| UC2 | [`feature/UC2-InchEquality`](./tree/feature/UC2-InchEquality) | Validate equality between two inch values |
-| UC3 | [`feature/UC3-GenericLength`](./tree/feature/UC3-GenericLength) | Introduced `LengthUnit` enum with conversion logic |
-| UC4 | [`feature/UC4-YardEquality`](./tree/feature/UC4-YardEquality) | Added `YARDS` unit (1 yard = 3 feet = 36 inches) |
-| UC5 | [`feature/UC5-UnitConversion`](./tree/feature/UC5-UnitConversion) | Enabled unit-to-unit conversion |
-| UC6 | [`feature/UC6-UnitAddition`](./tree/feature/UC6-UnitAddition) | Added support for adding different units |
-| UC7 | [`feature/UC7-TargetUnitAddition`](./tree/feature/UC7-TargetUnitAddition) | Result returned in first operand’s unit |
+| UC1 | [`feature/UC1-FeetEquality`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC1-FeetEquality) | Validate equality between two feet values |
+| UC2 | [`feature/UC2-InchEquality`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC2-InchEquality) | Validate equality between two inch values |
+| UC3 | [`feature/UC3-GenericLength`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC3-GenericLength) | Introduced `LengthUnit` enum with conversion logic |
+| UC4 | [`feature/UC4-YardEquality`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC4-YardEquality) | Added `YARDS` unit (1 yard = 3 feet = 36 inches) |
+| UC5 | [`feature/UC5-UnitConversion`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC5-UnitConversion) | Enabled unit-to-unit conversion |
+| UC6 | [`feature/UC6-UnitAddition`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC6-UnitAddition) | Added support for adding different units |
+| UC7 | [`feature/UC7-TargetUnitAddition`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC7-TargetUnitAddition) | Result returned in first operand’s unit |
 
 ---
 
@@ -39,11 +39,11 @@ This project follows a **progressive development approach**, where each use case
 
 | UC | Branch | Description |
 |----|--------|-------------|
-| UC8 | [`feature/UC8-StandaloneUnit`](./tree/feature/UC8-StandaloneUnit) | Introduced `IMeasurable` for abstraction |
-| UC9 | [`feature/UC9-WeightMeasurement`](./tree/feature/UC9-WeightMeasurement) | Added weight units (KG, Gram, Pound) |
-| UC10 | [`feature/UC10-GenericQuantityClass`](./tree/feature/UC10-GenericQuantityClass) | Implemented generic `Quantity<U>` |
-| UC11 | [`feature/UC11-VolumeMeasurement`](./tree/feature/UC11-VolumeMeasurement) | Added volume units (Litre, mL, Gallon) |
-| UC12 | [`feature/UC12-MoreOperations`](./tree/feature/UC12-MoreOperations) | Added `subtract()` and `divide()` |
+| UC8 | [`feature/UC8-StandaloneUnit`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC8-StandaloneUnit) | Introduced `IMeasurable` for abstraction |
+| UC9 | [`feature/UC9-WeightMeasurement`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC9-WeightMeasurement) | Added weight units (KG, Gram, Pound) |
+| UC10 | [`feature/UC10-GenericQuantityClass`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC10-GenericQuantityClass) | Implemented generic `Quantity<U>` |
+| UC11 | [`feature/UC11-VolumeMeasurement`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC11-VolumeMeasurement) | Added volume units (Litre, mL, Gallon) |
+| UC12 | [`feature/UC12-MoreOperations`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC12-MoreOperations) | Added `subtract()` and `divide()` |
 
 ---
 
@@ -51,9 +51,9 @@ This project follows a **progressive development approach**, where each use case
 
 | UC | Branch | Description |
 |----|--------|-------------|
-| UC13 | [`feature/UC13-Centralized-Arithmetic-Logic`](./tree/feature/UC13-Centralized-Arithmetic-Logic) | Centralized arithmetic using enum |
-| UC14 | [`feature/UC14-TemperatureMeasurement`](./tree/feature/UC14-TemperatureMeasurement) | Added temperature with non-linear conversion |
-| UC15 | [`feature/UC15-N-Tier`](./tree/feature/UC15-N-Tier) | Implemented N-Tier architecture |
+| UC13 | [`feature/UC13-Centralized-Arithmetic-Logic`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC13-Centralized-Arithmetic-Logic) | Centralized arithmetic using enum |
+| UC14 | [`feature/UC14-TemperatureMeasurement`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurement) | Added temperature with non-linear conversion |
+| UC15 | [`feature/UC15-N-Tier`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC15-N-Tier) | Implemented N-Tier architecture |
 
 ---
 
@@ -61,7 +61,7 @@ This project follows a **progressive development approach**, where each use case
 
 | UC | Branch | Description |
 |----|--------|-------------|
-| UC16 | [`feature/UC16-Database-Integration-with-JDBC`](./tree/feature/UC16-Database-Integration-with-JDBC) | Integrated H2 DB using JDBC |
+| UC16 | [`feature/UC16-Database-Integration-with-JDBC`](https://github.com/Dheerajchaudhary9401/QuantityMeasurementApp/tree/feature/UC16-Database-Integration-with-JDBC) | Integrated H2 DB using JDBC |
 
 ### 🔑 Key Learnings  
 - JDBC connection handling  
