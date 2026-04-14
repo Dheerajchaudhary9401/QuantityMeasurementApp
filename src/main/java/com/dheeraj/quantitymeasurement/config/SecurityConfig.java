@@ -26,12 +26,17 @@ public class SecurityConfig {
     private final AuthenticationProvider  authenticationProvider;
 
     private static final String[] PUBLIC_URLS = {
-        "/auth/**",
-        "/h2-console/**",
-        "/swagger-ui/**",
-        "/swagger-ui.html",
-        "/api-docs/**",
-        "/actuator/**"
+    		"/auth/**",
+            "/h2-console/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api-docs/**",
+            "/actuator/**",
+            "/api/v1/quantities/compare",
+            "/api/v1/quantities/add",
+            "/api/v1/quantities/subtract",
+            "/api/v1/quantities/divide",
+            "/api/v1/quantities/convert"
     };
 
     @Bean
