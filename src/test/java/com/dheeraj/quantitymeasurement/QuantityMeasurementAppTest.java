@@ -34,6 +34,8 @@ class QuantityMeasurementAppTest {
         userRepo.deleteAll();
     }
 
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
     private QuantityInputDTO input(double v1, String u1, String t1,
                                    double v2, String u2, String t2) {
         return new QuantityInputDTO(
@@ -71,10 +73,16 @@ class QuantityMeasurementAppTest {
         return new HttpEntity<>(headers);
     }
 
+    // ── Context load ──────────────────────────────────────────────────────────
+
     @Test
     void contextLoads() {
         // passes if Spring context starts successfully
     }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // PUBLIC CALCULATOR TESTS — NO TOKEN NEEDED
+    // ══════════════════════════════════════════════════════════════════════════
 
     @Test
     void testCompare_NoToken_Returns200() {
@@ -166,11 +174,28 @@ class QuantityMeasurementAppTest {
         assertEquals("true", r.getBody().getResultString());
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
+    // PROTECTED HISTORY TESTS — TOKEN REQUIRED
+    // ══════════════════════════════════════════════════════════════════════════
+
     @Test
     void testHistory_NoToken_Returns401() {
         ResponseEntity<String> r = restTemplate.getForEntity(
             base + "/history/operation/add", String.class);
 
+        /*
+         * FIX: Only check the STATUS CODE — not the body message.
+         *
+         * The 401 status is what proves security is working.
+         * Checking exact body text is fragile — the message
+         * can vary based on Spring Security configuration and
+         * the exact path through the filter chain.
+         *
+         * What matters for this test:
+         *   ✅ Request is rejected (not 200)
+         *   ✅ Rejection is specifically "Unauthorized" (401)
+         *   ✅ Not a server error (not 500)
+         */
         assertEquals(HttpStatus.UNAUTHORIZED, r.getStatusCode());
     }
 
@@ -242,6 +267,10 @@ class QuantityMeasurementAppTest {
         assertEquals(HttpStatus.UNAUTHORIZED, r.getStatusCode());
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
+    // AUTH TESTS
+    // ══════════════════════════════════════════════════════════════════════════
+
     @Test
     void testRegister_Returns201() {
         ResponseEntity<AuthResponse> r = restTemplate.postForEntity(
@@ -299,6 +328,10 @@ class QuantityMeasurementAppTest {
 
         assertEquals(HttpStatus.CONFLICT, r.getStatusCode());
     }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // COMBINED FLOW TEST
+    // ══════════════════════════════════════════════════════════════════════════
 
     @Test
     void testFullFlow_PublicOperations_ThenLoginForHistory() {
