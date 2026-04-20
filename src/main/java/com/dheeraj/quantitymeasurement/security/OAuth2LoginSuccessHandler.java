@@ -49,7 +49,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String refreshToken = jwtService.generateRefreshToken(user);
 
         // Redirect to Angular frontend
-        String frontendUrl = "http://localhost:4200/oauth2/callback";
+        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "http://localhost:4200") + "/oauth2/callback";
         String targetUrl = UriComponentsBuilder.fromUriString(frontendUrl)
                 .queryParam("accessToken", jwtToken)
                 .queryParam("refreshToken", refreshToken)

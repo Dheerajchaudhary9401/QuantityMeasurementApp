@@ -1,14 +1,36 @@
-# Step 1: Use official Java runtime
-FROM eclipse-temurin:17-jdk-jammy
+# =========================
+# Stage 1: Build Stage
+# =========================
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 
-# Step 2: Set working directory
 WORKDIR /app
 
-# Step 3: Copy jar file into container
-COPY target/*.jar app.jar
+# Copy pom first (better caching)
+COPY pom.xml .
 
-# Step 4: Expose port (default Spring Boot port)
+# Download dependencies first (faster rebuilds)
+RUN mvn dependency:go-offline
+
+# Copy source code
+COPY src ./src
+
+# Build application
+RUN mvn clean package -DskipTests
+
+# =========================
+# Stage 2: Runtime Stage
+# =========================
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+# Copy jar from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Render uses dynamic port → must be exposed
 EXPOSE 8080
 
-# Step 5: Run the application
+# IMPORTANT: Render injects PORT env variable
+# Spring Boot must use it (see note below)
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
